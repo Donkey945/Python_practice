@@ -1,0 +1,12 @@
+import re
+phone_re = re.compile(r'(\d\d\d)-(\d\d\d-\d\d\d\d)')
+mo = phone_re.search('My number is 415-555-4242.')
+a = mo.group(1)
+b = mo.group(2)
+all = mo.group(0)
+all_1 = mo.group()
+print(a,b,all,all_1)
+c = mo.groups()
+area_code, main_number = mo.groups()
+print(area_code)
+print(main_number)
