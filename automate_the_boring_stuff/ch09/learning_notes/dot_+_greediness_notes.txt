@@ -1,0 +1,8 @@
+1. regex such as r'\d\s\w+' matters in the sequence of regex, \d will need to match first, follow by \s and then \w+.
+2. dot, which is '.' for example r'.le' in the text of 'apple' will only match one character, which is 'p' in this case and the result after findall() will be ['ple']. 
+   '+' is a quantifier: it repeats the single atom or group immediately to its left, and it is greedy by default, which means taking as many consecutive repetitions as it can, for example 'ap+' will return ['appp'] after findall() on the text 'appple', but r'ap.' will only return ['app'] after findall() on 'appple'.
+3. there is no such thing as r'+pe', '+' is a postfix operator.
+4. mistake learned: the greediness of '+' will only apply to the single atom or group immediately to its left,
+   for example: r'ap+' for 'apple' will return 'app' instead of 'apple', '+' is a quantifier that only apply its greediness on the letter 'p', so,
+   for the example of text 'appple', it will take as many 'p' as long as they are continuous, which return ['appp'] after findall().
+5. greediness is only unique to quantifiers like '+', dot '.' is not quantifier, it is just an atom.
