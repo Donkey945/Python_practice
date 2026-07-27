@@ -1,0 +1,9 @@
+import re
+haRegex = re.compile(r'(Ha){3}')
+match1 = haRegex.search('HaHaHa')
+a = match1.group()
+print(a)
+
+match = haRegex.search('HaHa')
+b = match == None
+print(b)

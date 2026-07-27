@@ -1,0 +1,15 @@
+import re
+pattern = re.compile('Eggs( and spam)*')
+a = pattern.search('Eggs')
+b = pattern.search('Eggs and spam')
+c = pattern.search('Eggs and spam and spam')
+d = pattern.search('Eggs and spam and spam and spam')
+print(a,b,c,d, sep='\n')
+print('------')
+
+pattern1 = re.compile('Eggs( and spam)+')
+a = pattern1.search('Eggs')
+b = pattern1.search('Eggs and spam')
+c = pattern1.search('Eggs and spam and spam')
+d = pattern1.search('Eggs and spam and spam and spam')
+print(a,b,c,d, sep='\n')
