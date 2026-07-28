@@ -1,0 +1,16 @@
+import re
+pattern = re.compile(r'\bcat.*?\b')
+a = pattern.findall('The cat found a catapult catalog in the catacombs.')
+print(a)
+
+new_pattern = re.compile(r'\bcat.*\b')
+b = new_pattern.findall('The cat found a catapult catalog in the catacombs.')
+print(b)
+
+newest_pattern = re.compile('\Bcat.*\B')
+c = newest_pattern.findall('The cat found a catapult catalog in the catacombs.')
+print(c)
+
+newest_pattern2 = re.compile('cat')
+d = newest_pattern2.findall('certificate')
+print(d)

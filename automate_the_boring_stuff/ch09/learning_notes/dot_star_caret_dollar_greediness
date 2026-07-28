@@ -1,0 +1,45 @@
+# [Platform] - [Section] - [Lab/Topic name]
+  [ATBS] - [chapter09] - [regex]
+
+Date: 2026/07/28 
+Status: unfinished
+
+## Core concept
+Regex:
+1, dot: any characters except newline(\n)
+2, DOTALL: any characters include newline(\n)
+3, star: ZERO or more repetition of the preceding character
+4, caret '^', dollar '$': they are anchors that match a position(start or end of the string not the character). 
+5, caret '^' also has a scond meaning inside character clss: [^abc] means "not a a,b or c"
+6, word boundary '\b': a zero-width position between a word character and a non-word character.
+7, greedy and lazy concpet.
+
+## What I did
+reading and write down the example code.
+
+## Where I got stuck / mistakes
+1. what if the regex is r'\bcat.*?\b' and use search() to find the matched result?
+   "greediness of '.*' expression" OR "search() of returning the leftmost matched
+    has the return priority?
+   Take the text example of "The cat found a catapult catalog in the catacombs.", what will be the output of search()?
+
+2. dot regex will match all characters except "newline", not "space".
+3. star regex will match Zero or More, not One or More which is '+'.
+## Fix
+ing style, with a discriminating example so it's testable later.
+
+markdown
+## Fix
+1. **Position beats length.** search() first commits to the LEFTMOST starting
+   position that can produce a complete match — this happens BEFORE greediness is
+   considered. Greedy/lazy only decides HOW MUCH is consumed at that already-chosen
+   position; it never lets a shorter match further right win over an earlier one.
+
+2. **Greedy vs lazy is a preference, settled by backtracking.**
+   - greedy '.*'  : grab as much as possible, then RELEASE chars one at a time if
+                    the rest of the pattern fails (backtrack = move backward).
+   - lazy   '.*?' : grab as little as possible, then CONSUME chars one at a time if
+                    the rest of the pattern fails (backtrack = advance, but each
+                    advance is CAUSED by a failed check rewinding to the quantifier).
+   Both are the same mechanism: on failure, return to the last quantifier with
+   untried options and try its next amount.

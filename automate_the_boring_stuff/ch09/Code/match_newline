@@ -1,0 +1,10 @@
+import re
+no_newline_re = re.compile('.*')
+a = no_newline_re.search('Serve the public trust.\nProtect the innocent.\nUphold the law.').group()
+
+
+newline_re = re.compile(r'.*', re.DOTALL)
+b = newline_re.search('Serve the public trust.'
+                      '\nProtect the innocent.\nUphold the law.').group()
+
+print(a,b, sep='\n')
