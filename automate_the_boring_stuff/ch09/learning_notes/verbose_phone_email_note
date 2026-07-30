@@ -1,0 +1,21 @@
+# [Platform] - [Section] - [Lab/Topic name]
+  [ATBS] - [Chapter09] - [verbose_regex]
+Date: 2026/07/30
+Status: unfinished
+
+## Where I got stuck / mistakes
+1. Over-typed string quotes inside the pattern: ('\d{3}'). My intention was to preserve the r'...' form, but I confused two layers: the quotes in this form are python string delimiters that wrap the whole pattern once at the outside, inside it's pure regex, then the ' in my mistake is just a literal apostrophe to match.
+
+2. Alternation precedence: wrote (\d{3})|\(\d{3}\) at top level, so | split the entire pattern into two instead of offering two area-code forms.
+
+3. Wrote {com} trying to match the literal characters c-o-m. Braces are quantifiers (they expect numbers like {2,4}), so {com} was read as a literal string. Literal letters need no brackets at all : com matches itself; [com] would wrongly mean 'any one of c/o/m'.
+
+4. Over-grouping: reflexively wrapped every token in ().
+
+## Fix
+1. One delimiter pair around the whole pattern, internal tokens are bare regex, grouping is done by parentheses alone: (\d{3}), not ('\d{3}').
+2. Contain alternation in its own group: (\d{3}|\(\d{3}\)), | has the lowest precedence in regex.
+
+3. To match literal characters, write them bare: com. Reserve {} for repetition counts and [] for 'any one of these characters.
+
+4. Parenthesize only to bind a sub-pattern for a quantifier/alternation, or to capture something you actually want to extract.

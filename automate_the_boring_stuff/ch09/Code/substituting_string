@@ -1,0 +1,8 @@
+import re
+agent_pattern = re.compile(r'Agent \w*')
+a = agent_pattern.sub('CENSORED', 'Agent Alice contacted Agent Bob.')
+print(a)
+
+new_agent_pattern = re.compile(r'Agent (\w)\w*')
+b = new_agent_pattern.sub('1****', 'Agent Alice contacted Agent Bob.')
+print(b)

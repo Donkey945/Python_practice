@@ -1,0 +1,4 @@
+import re
+pattern = re.compile(r'robocop', re.I)
+match = pattern.findall('RoboCop is RoBOcOP is ROBOCOP is rOboCOP')
+print(match)
