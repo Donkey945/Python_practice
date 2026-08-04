@@ -1,7 +1,7 @@
 # [Platform] - [Section] - [Lab/Topic name]
   [ATBS] - [CH09] - [regex_revision]
 Date: 2026/08/04
-Status: finshed
+Status: finished
 
 ## Where I got stuck / mistakes
 1. What is 'raw string'?
