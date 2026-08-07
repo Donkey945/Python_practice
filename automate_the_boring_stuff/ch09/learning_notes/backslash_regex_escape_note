@@ -1,0 +1,32 @@
+# [Platform] - [Section] - [Lab/Topic name]
+  [ATBS] - [chapter09] - [exercise]
+Date: 2026/08/07
+Status: unfinished
+
+## Where I got stuck / mistakes
+1. Thought strip('a]b') removes 'a]b' in the exact sequence from the target text.
+
+2. Confused the two backslash tools: r'...' vs re.escape. Thought re.escape is what stops python from treating \ as an escape.
+
+3. Thought re.escape could rescue a mistyped non-raw '\b'. Assumed that if a user means the set {\, b} but types '\b', re.escape could fix it.
+
+4. Didn't see why re.escape turns \s into \\s, or why \\s is not \s in regex, thought \\s and \s are the same in effect to regex engine.
+
+5. Did not understand why a literal backslash needs two backslashes and expected print('\') to print \.
+
+
+## Fix
+1. Strip treats its argument as a set of characters, not a sequence. Strip('a]b') deletes any of {a, ], b} from each end, in any order until it hits a non-member (NOT every matches in the text!!! for example 'ababababa'.strip('a') returns 'bababab'. 
+This set semantics is exactly why the regex uses a character class [...] (matches any one member) rather than bare letters
+
+2. They act on different layers, opposite directions:
+   a) r'...' (raw string) acts at the python parser layer that prevents python from consuming backslashes i typed.
+   b) re.escape(s) acts at runtime on data, add backslashes to neutralize regex metacharacters in a variable i am inserting into the pattern.
+   c) r'...' keep the backslashes i typed, re.escape adds backslashes to data, both involve \ but they solve unrelated problems.
+
+3. '\b' is collapsed by python's parser into a single backspace char before any re function runs. The \ and b no longer exist in the string, so re.escape (which acts later) can't recover them. The fix belongs at the input layer: write r'\b' or '\\b'. Key asymmetry: '\s' survives Python (not a valid Python escape) so re.escape can protect it; '\b' doesn't survive, so it can't.
+
+4. They are different to the engine: \s = whitespace metacharacter; \\s = literal backslash + literal s. re.escape deliberately produces \\s so the engine reads a literal backslash (its own rule: \\ → one literal \) instead of the whitespace metacharacter.
+
+5. '\' is not a character, it is an operator meaning "treat the next char specially".
+So print('\') is a SyntaxError (\' escapes the closing quote → unterminated string). To get one literal backslash you write \\ (print('\\') → \). This rule holds independently in both layers — Python's string parser and the regex engine — which is why backslashes appear to multiply as a string passes from one to the next.
